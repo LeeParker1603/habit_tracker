@@ -122,7 +122,7 @@ jobs:
             EOF
 
             # Перезапуск Docker-контейнеров одной командой с очисткой старых анонимных томов
-            docker compose down
+            docker compose down -v
             docker compose up -d --build
 
             echo "Ожидание запуска базы данных..."
