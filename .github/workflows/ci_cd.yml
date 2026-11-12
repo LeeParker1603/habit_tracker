@@ -122,7 +122,7 @@ jobs:
             EOF
 
             # Перезапуск Docker-контейнеров одной командой с очисткой старых анонимных томов
-            docker compose down -v
+            docker compose down
             docker compose up -d --build
 
             echo "Ожидание запуска базы данных..."
@@ -134,6 +134,3 @@ jobs:
               echo "База данных еще инициализируется, ждем 1 секунду..."
               sleep 1
             done
-
-            # Применение миграций внутри запущенного контейнера Django
-            docker compose exec -T web python manage.py migrate --noinput
