@@ -4,9 +4,9 @@ from datetime import datetime, date
 from celery import shared_task
 from habits.models import Habit
 
-TELEGRAM_BOT_TOKEN = os.getenv('TELEGRAM_BOT_TOKEN')
+TELEGRAM_BOT_TOKEN = os.getenv("TELEGRAM_BOT_TOKEN")
 # Прокси берется из .env
-PROXY_URL = os.getenv('TELEGRAM_PROXY', None)
+PROXY_URL = os.getenv("TELEGRAM_PROXY", None)
 
 
 def send_telegram_message(chat_id, text):
@@ -16,10 +16,7 @@ def send_telegram_message(chat_id, text):
         return
 
     url = f"https://api.telegram.org/bot{TELEGRAM_BOT_TOKEN}/sendMessage"
-    payload = {
-        'chat_id': chat_id,
-        'text': text
-    }
+    payload = {"chat_id": chat_id, "text": text}
 
     # Настройка прокси при наличии в .env
     proxies = {"http": PROXY_URL, "https": PROXY_URL} if PROXY_URL else None
@@ -41,7 +38,7 @@ def check_and_send_habit_reminders():
     habits = Habit.objects.filter(
         time__hour=current_time.hour,
         time__minute=current_time.minute,
-        is_pleasant=False
+        is_pleasant=False,
     )
 
     for habit in habits:
