@@ -1,4 +1,6 @@
 import os
+import sys
+
 from dotenv import load_dotenv
 from datetime import timedelta
 from pathlib import Path
@@ -86,6 +88,15 @@ DATABASES = {
    }
 }
 
+
+# Если запущен скрипт тестирования, подменяем БД на встроенную SQLite
+if "test" in sys.argv:
+    DATABASES = {
+        "default": {
+            "ENGINE": "django.db.backends.sqlite3",
+            "NAME": ":memory:",
+        }
+    }
 
 
 AUTH_PASSWORD_VALIDATORS = [
